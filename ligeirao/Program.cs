@@ -9,14 +9,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-var connectionString = "";
-
-connectionString = "Data Source=10.1.1.3;Initial Catalog=mTeste;User ID=sa;Password=@npd.2020;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-
-builder.Services.AddDbContextFactory<LigeiraoContext>((serviceProvider, options) =>
-{
-    options.UseSqlServer(connectionString);
-});
 builder.Services.AddCors();
 
 var app = builder.Build();
