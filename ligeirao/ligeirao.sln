@@ -5,22 +5,27 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ligeirao", "ligeirao.csproj", "{271BF366-2D9F-4BC8-B3C0-22A2EE4F7848}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeraLocalizacoes", "..\GeraLocalizacoes\GeraLocalizacoes.csproj", "{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeraLocalizacoes", "..\GeraLocalizacoes\GeraLocalizacoes.csproj", "{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Testes|Any CPU = Testes|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{271BF366-2D9F-4BC8-B3C0-22A2EE4F7848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{271BF366-2D9F-4BC8-B3C0-22A2EE4F7848}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{271BF366-2D9F-4BC8-B3C0-22A2EE4F7848}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{271BF366-2D9F-4BC8-B3C0-22A2EE4F7848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{271BF366-2D9F-4BC8-B3C0-22A2EE4F7848}.Testes|Any CPU.ActiveCfg = Testes|Any CPU
+		{271BF366-2D9F-4BC8-B3C0-22A2EE4F7848}.Testes|Any CPU.Build.0 = Testes|Any CPU
 		{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}.Testes|Any CPU.ActiveCfg = Testes|Any CPU
+		{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}.Testes|Any CPU.Build.0 = Testes|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

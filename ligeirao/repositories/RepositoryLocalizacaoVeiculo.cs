@@ -13,14 +13,13 @@ namespace ligeirao.repositories
         {
         }
 
-        public IEnumerable<LocalizacaoVeiculo> UltimasLocalizacoes ()
+        public List<LocalizacaoVeiculo> UltimasLocalizacoes ()
         {
             var localizacoes = _context.Set<LocalizacaoVeiculo>().OrderByDescending(lv => lv.Horario).Take(10).ToList();
-            localizacoes = (List<LocalizacaoVeiculo>)localizacoes.GroupBy(lv => lv.IdVeiculo);
             return localizacoes;
         }
 
-        public IEnumerable<LocalizacaoVeiculo> UltimasLocalizacoes(int idVeiculo)
+        public List<LocalizacaoVeiculo> UltimasLocalizacoes(int idVeiculo)
         {
             var localizacoes = _context.Set<LocalizacaoVeiculo>().Where(lv => lv.IdVeiculo == idVeiculo).OrderByDescending(lv => lv.Horario).Take(10).ToList();
             return localizacoes;

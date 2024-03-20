@@ -13,10 +13,10 @@ namespace ligeirao.controllers
 
         [HttpGet]
         [Route("api/[controller]/Ultimas")]
-        public ActionResult<IEnumerable<LocalizacaoVeiculoDTO>> Get()
+        public ActionResult<List<LocalizacaoVeiculoDTO>> Get()
         {
-            var localizacoes = new ServiceLocalizacaoVeiculo().Repository.UltimasLocalizacoes();
-            var localizacoesDTO = new ServiceLocalizacaoVeiculoDTO().ConvertToDTO(localizacoes.ToList());
+            var localizacoes = new ServiceLocalizacaoVeiculo().Repository.UltimasLocalizacoes().ToList();
+            var localizacoesDTO = new ServiceLocalizacaoVeiculoDTO().ConvertToDTO(localizacoes);
             return Ok(localizacoesDTO);
         }
 
