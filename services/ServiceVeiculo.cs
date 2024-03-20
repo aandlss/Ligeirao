@@ -14,7 +14,7 @@ namespace ligeirao.services
             Repository = new();
         }
 
-        public bool placaIsValid(string placa)
+        public bool PlacaIsValid(string placa)
         {
             if (placa.Length != 7)
             {

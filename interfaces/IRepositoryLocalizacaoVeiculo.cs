@@ -8,6 +8,7 @@ namespace ligeirao.interfaces
 {
     public interface IRepositoryLocalizacaoVeiculo : IRepositoryBase<LocalizacaoVeiculo>
     {
-        
+        IEnumerable<LocalizacaoVeiculo> UltimasLocalizacoes();
+        IEnumerable<LocalizacaoVeiculo> UltimasLocalizacoes(int IdVeiculo);
     }
 }

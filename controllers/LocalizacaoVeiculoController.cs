@@ -1,5 +1,7 @@
 ﻿using ligeirao.models;
+using ligeirao.models.DTO;
 using ligeirao.services;
+using ligeirao.services.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +10,31 @@ namespace ligeirao.controllers
     [ApiController]
     public class LocalizacaoVeiculoController : ControllerBase
     {
+
         [HttpGet]
-        [Route("api/[controller]")]
-        public ActionResult<string> Get()
+        [Route("api/[controller]/Ultimas")]
+        public ActionResult<IEnumerable<LocalizacaoVeiculoDTO>> Get()
         {
-            return Ok("Teste feito com sucesso");
+            var localizacoes = new ServiceLocalizacaoVeiculo().Repository.UltimasLocalizacoes();
+            var localizacoesDTO = new ServiceLocalizacaoVeiculoDTO().ConvertToDTO(localizacoes.ToList());
+            return Ok(localizacoesDTO);
+        }
+
+        [HttpGet]
+        [Route("api/[controller]/Veiculo/{idVeiculo}")]
+        public ActionResult<IEnumerable<LocalizacaoVeiculoDTO>> Get(int idVeiculo)
+        {
+            if (!new ServiceVeiculo().Repository.ExisteVeiculo(idVeiculo))
+                return BadRequest("Veiculo não encontrado");
+
+            var localizacoes = new ServiceLocalizacaoVeiculo().Repository.UltimasLocalizacoes(idVeiculo);
+            var localizacoesDTO = new ServiceLocalizacaoVeiculoDTO().ConvertToDTO(localizacoes.ToList());
+            return Ok(localizacoesDTO);
         }
 
         [HttpPost]
-        [Route("api/[controller]")]
-        public IActionResult Post([FromBody] LocalizacaoVeiculo localizacao)
+        [Route("api/[controller]/Cadastrar")]
+        public IActionResult Post([FromBody] LocalizacaoVeiculoDTO localizacao)
         {
             if(localizacao == null)
                 return BadRequest("Localização inválida");
@@ -25,22 +42,18 @@ namespace ligeirao.controllers
             if(localizacao.IdVeiculo == 0)
                 return BadRequest("Veículo inválido");
 
-            if(localizacao.Latitude == 0)
-                return BadRequest("Latitude inválida");
+            localizacao.Id = 0;
 
-            if(localizacao.Longitude == 0)
-                return BadRequest("Longitude inválida");
-
-            if(localizacao.Id != 0)
-                return BadRequest("Id deve ser zero");
-
+            LocalizacaoVeiculo localizacaoClass = new ServiceLocalizacaoVeiculoDTO().ConvertToClass(localizacao);
             ServiceLocalizacaoVeiculo serviceLocalizacaoVeiculo = new();
-            serviceLocalizacaoVeiculo.Repository.Create(localizacao);
+            serviceLocalizacaoVeiculo.Repository.Create(localizacaoClass);
 
-            if (localizacao.Id == 0)
+            if (localizacaoClass.Id == 0)
                 return BadRequest("Falha ao incluir localizacao");
 
-            return Ok("Localização incluída com sucesso");
+            localizacao.Id = localizacaoClass.Id;
+            
+            return Ok(localizacao);
         }
         
     }

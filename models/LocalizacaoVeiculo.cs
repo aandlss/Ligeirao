@@ -16,6 +16,8 @@ namespace ligeirao.models
         public decimal Latitude {get; set;}
         [Column(TypeName = "decimal(11,8)")]
         public decimal Longitude {get; set;}
-        public Veiculo Veiculo { get; set;}
+        [Column(TypeName = "datetime")]
+        public DateTime Horario { get; set; }
+        public Veiculo? Veiculo { get; set;}
     }
 }

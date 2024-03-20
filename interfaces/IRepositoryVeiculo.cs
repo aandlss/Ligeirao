@@ -8,6 +8,6 @@ namespace ligeirao.interfaces
 {
     public interface IRepositoryVeiculo : IRepositoryBase<Veiculo>
     {
-        
+        bool ExisteVeiculo(int idVeiculo);
     }
 }

@@ -18,7 +18,7 @@ namespace ligeirao.controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]")]
+        [Route("api/[controller]/Cadastrar")]
         public IActionResult AdicionaVeiculo([FromBody] VeiculoDTO veiculo)
         {
             Veiculo veiculoClass = new ServiceVeiculoDTO().ConvertToClass(veiculo);
@@ -35,7 +35,7 @@ namespace ligeirao.controllers
             if (veiculoClass.Id != 0)
                 return BadRequest("Id deve ser zero");
 
-            if(serviceVeiculo.placaIsValid(veiculoClass.Placa) == false)
+            if(serviceVeiculo.PlacaIsValid(veiculoClass.Placa) == false)
                 return BadRequest("Placa inválida");
 
             veiculoClass.LocalizacoesVeiculo = null;

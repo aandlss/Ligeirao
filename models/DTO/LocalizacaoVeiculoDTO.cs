@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ligeirao.models.DTO
 {
@@ -8,5 +9,6 @@ namespace ligeirao.models.DTO
         public int IdVeiculo { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
+        public DateTime Horario { get; set; }
     }
 }
