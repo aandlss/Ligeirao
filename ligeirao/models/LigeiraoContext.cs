@@ -21,7 +21,7 @@ namespace ligeirao.models
             if(!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseSqlServer("Data Source=10.1.1.3;Initial Catalog=mTeste;User Id=sa;Password=@npd.2020");
-                optionsBuilder.UseSqlServer("Data Source=10.1.1.3;Initial Catalog=mTeste;User ID=sa;Password=@npd.2020;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+                optionsBuilder.UseSqlServer("Data Source=andre-pc\\sqlExpress;Initial Catalog=ligeirao;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

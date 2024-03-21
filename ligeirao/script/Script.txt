@@ -58,7 +58,7 @@ CREATE TABLE [dbo].[LocalizacaoVeiculo](
 	[IdVeiculo] [int] NULL,
 	[Latitude] [decimal](10, 8) NULL,
 	[Longitude] [decimal](11, 8) NULL,
-	[Horario] [timestamp] NULL,
+	[Horario] [datetime] NULL,
  CONSTRAINT [PK_localiza_veiculo] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
