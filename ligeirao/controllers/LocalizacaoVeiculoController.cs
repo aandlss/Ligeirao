@@ -16,7 +16,7 @@ namespace ligeirao.controllers
         public ActionResult<List<LocalizacaoVeiculoDTO>> Get()
         {
             var localizacoes = new ServiceLocalizacaoVeiculo().Repository.UltimasLocalizacoes().ToList();
-            var localizacoesDTO = new ServiceLocalizacaoVeiculoDTO().ConvertToDTO(localizacoes);
+            var localizacoesDTO = new ServiceLocalizacaoVeiculoDTO().ConvertToDTO(localizacoes.ToList());
             return Ok(localizacoesDTO);
         }
 

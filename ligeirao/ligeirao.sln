@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ligeirao", "ligeirao.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeraLocalizacoes", "..\GeraLocalizacoes\GeraLocalizacoes.csproj", "{5BFD0E64-9ED0-4AFE-A8E0-592DE47E7E4E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{DB864461-F772-4F93-85FD-6D2882BD6471}"
+	ProjectSection(SolutionItems) = preProject
+		..\Front\mapaosm.html = ..\Front\mapaosm.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

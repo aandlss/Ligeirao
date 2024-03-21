@@ -12,7 +12,8 @@ namespace ligeirao.models
     {
         [Key]
         public int Id {get; set;}
-        public int IdVeiculo {get; set;}
+        public int IdVeiculo { get; set; }
+        [Column(TypeName = "decimal(10,8)")]
         public decimal Latitude {get; set;}
         [Column(TypeName = "decimal(11,8)")]
         public decimal Longitude {get; set;}

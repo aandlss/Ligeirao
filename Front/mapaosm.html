@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenStreetMap com Dados da API</title>
+    <style>
+        #map { height: 400px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script>
+        var map = L.map('map').setView([-15.61, -56.0611], 13); // Define o centro do mapa e o nível de zoom inicial
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map); // Adiciona camada do OpenStreetMap
+
+        // Função para fazer a chamada à API e traçar a rota no mapa
+        function plotRoute() {
+            fetch('https://localhost:7273/api/LocalizacaoVeiculo/Ultimas')
+                .then(response => response.json())
+                .then(data => {
+                    // Extrai as coordenadas de latitude e longitude dos dados da API
+                     
+                    var latlngs = data.map(location => [location.latitude, location.longitude]);
+                    console.log(location => [location.latitude, location.longitude])   
+                    console.log(latlngs);
+                    
+                    // Adiciona a linha da rota ao mapa
+                    var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+                    map.fitBounds(polyline.getBounds()); // Ajusta o mapa para mostrar a linha
+                })
+                .catch(error => console.error('Erro ao buscar dados da API:', error));
+        }
+
+        // Chama a função para plotar a rota ao carregar a página
+        plotRoute();
+
+        // Atualiza a rota a cada 5 segundos
+        setInterval(plotRoute, 5000);
+    </script>
+</body>
+</html>
