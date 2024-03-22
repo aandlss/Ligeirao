@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 builder.Services.AddCors();
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 

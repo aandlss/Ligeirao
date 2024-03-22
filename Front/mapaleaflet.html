@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Location</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map { height: 400px; }
+        #map {
+            height: 400px;
+        }
     </style>
 </head>
+
 <body>
     <div id="map"></div>
 
@@ -21,13 +25,13 @@
         var polyline;
 
         function getVehicleLocations() {
-            axios.get('https://localhost:7273/api/LocalizacaoVeiculo/Ultimas')
+            axios.get('https://localhost:5018/api/LocalizacaoVeiculo/Ultimas')
                 .then(function (response) {
                     var locations = response.data;
                     if (locations && locations.length > 0) {
                         var firstLocation = locations[0];
                         var lastLocation = locations[locations.length - 1];
-                        var latlngs = locations.map(function(location) {
+                        var latlngs = locations.map(function (location) {
                             return [location.latitude, location.longitude];
                         });
 
@@ -35,7 +39,7 @@
                             map.removeLayer(polyline);
                         }
 
-                        polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+                        polyline = L.polyline(latlngs, { color: 'red' }).addTo(map);
                         map.fitBounds(polyline.getBounds());
                     } else {
                         console.error('No vehicle locations found');
@@ -50,4 +54,5 @@
         setInterval(getVehicleLocations, 3000);
     </script>
 </body>
+
 </html>
