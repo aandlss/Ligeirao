@@ -1,53 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Location</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map { height: 400px; }
-    </style>
-</head>
-<body>
-    <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
-    <script>
-        var map = L.map('map').setView([0, 0], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-        var polyline;
-
-        function getVehicleLocations() {
-            axios.get('https://localhost:7273/api/LocalizacaoVeiculo/Ultimas')
-                .then(function (response) {
-                    var locations = response.data;
-                    if (locations && locations.length > 0) {
-                        var firstLocation = locations[0];
-                        var lastLocation = locations[locations.length - 1];
-                        var latlngs = locations.map(function(location) {
-                            return [location.latitude, location.longitude];
-                        });
-
-                        if (polyline) {
-                            map.removeLayer(polyline);
-                        }
-
-                        polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
-                        map.fitBounds(polyline.getBounds());
-                    } else {
-                        console.error('No vehicle locations found');
-                    }
-                })
-                .catch(function (error) {
-                    console.error('Error fetching vehicle locations', error);
-                });
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            /* Usando a fonte Roboto */
+            font-weight: bold;
+            background-color: #f5f5f5;
+            flex-direction: column;
         }
 
-        getVehicleLocations();
-        setInterval(getVehicleLocations, 3000);
-    </script>
+        #map {
+            height: 600px;
+            width: 22%;
+            margin-top: 70px;
+            margin-top: 70px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            /* border: 2px solid black; */
+        }
+
+        header {
+            width: 22%;
+            background-color: #3d3b3a;
+            color: #fff;
+            text-align: center;
+            position: absolute;
+            top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 20px;
+            font-weight: bold;
+            /* border: 2px solid black; */
+        }
+
+        #nome {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #funcao {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 class="nome">Ligeirão - UFMT </h1>
+        <h1 class="funcao">Onde está? - Pontos </h1>
+    </header>
+    <div id="map">
+
+
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
+        <script>
+            var map = L.map('map').setView([0, 0], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            var polyline;
+            var lastLocation = null; // Variável para armazenar a última localização recebida
+            var busMarker = null; // Variável para armazenar o marcador do ônibus
+
+            function getVehicleLocations() {
+                axios.get('https://localhost:7273/api/LocalizacaoVeiculo/Ultimas')
+                    .then(function (response) {
+                        var locations = response.data;
+                        if (locations && locations.length > 0) {
+                            var latlngs = locations.map(function (location) {
+                                return [location.latitude, location.longitude];
+                            });
+
+                            // Remove o polilinha anterior se existir
+                            if (polyline) {
+                                map.removeLayer(polyline);
+                            }
+
+                            // Adiciona a polilinha conectando todas as localizações
+                            polyline = L.polyline(latlngs, { color: 'blue' }).addTo(map);
+                            map.fitBounds(polyline.getBounds());
+
+                            // Verifica se há uma nova localização desde a última vez
+                            if (lastLocation === null || !isSameLocation(lastLocation, locations[0])) {
+                                // Remove o marcador anterior se existir
+                                if (busMarker) {
+                                    map.removeLayer(busMarker);
+                                }
+
+                                // Adiciona o marcador de ônibus apenas na primeira localização
+                                var newLocation = locations[0];
+                                var busIcon = L.icon({
+                                    iconUrl: 'onibus.png',
+                                    iconSize: [32, 32],
+                                    iconAnchor: [16, 32],
+                                    popupAnchor: [0, -32]
+                                });
+
+                                // Adiciona o novo marcador de ônibus na nova localização
+                                busMarker = L.marker([newLocation.latitude, newLocation.longitude], { icon: busIcon }).addTo(map)
+                                    .bindPopup('<b>Bus</b>'); // Personalize o conteúdo do popup conforme necessário
+
+                                // Atualiza a última localização
+                                lastLocation = newLocation;
+                            }
+                        } else {
+                            console.error('No vehicle locations found');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Error fetching vehicle locations', error);
+                    });
+            }
+
+            // Função para verificar se duas localizações são iguais
+            function isSameLocation(location1, location2) {
+                return location1.latitude === location2.latitude && location1.longitude === location2.longitude;
+            }
+
+
+            getVehicleLocations();
+            setInterval(getVehicleLocations, 3000);
+
+            function getBusStops() {
+                axios.get('https://localhost:7273/api/PontoReferencia/Todos')
+                    .then(function (response) {
+                        var busStops = response.data;
+                        busStops.forEach(function (stop) {
+                            var icon = L.icon({
+                                iconUrl: 'localizacao.png',
+                                iconSize: [32, 32],
+                                iconAnchor: [16, 32],
+                                popupAnchor: [0, -32]
+                            });
+                            var marker = L.marker([stop.latitude, stop.longitude], { icon: icon }).addTo(map);
+                            marker.bindPopup('<b>Ponto de ônibus</b><br>' + stop.descricao);
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error('Error fetching bus stops', error);
+                    });
+            }
+
+            getBusStops();
+        </script>
+
+    </div>
 </body>
+
 </html>

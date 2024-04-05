@@ -17,17 +17,23 @@ namespace controllers
 
         [HttpPost]
         [Route("api/[controller]/Cadastrar")]
-        public ActionResult<PontoReferencia> Add([FromBody] PontoReferencia pontoReferencia) {
-            pontoReferencia.Id = 0;
-            if(pontoReferencia == null)
-                return BadRequest("Ponto de referência inválido");
+        public ActionResult<List<PontoReferencia>> Add([FromBody] List<PontoReferencia> pontosReferencia) {
 
-            if(string.IsNullOrEmpty(pontoReferencia.Descricao))
-                return BadRequest("Descrição inválida");
 
-            pontoReferencia = new ServicePontoReferencia().Repository.Create(pontoReferencia);
+            foreach (var pontoReferencia in pontosReferencia)
+            {
+                pontoReferencia.Id = 0;
+                if (pontoReferencia == null)
+                    return BadRequest("Ponto de referência inválido");
 
-            return pontoReferencia;
+                if (string.IsNullOrEmpty(pontoReferencia.Descricao))
+                    return BadRequest("Descrição inválida");
+
+                new ServicePontoReferencia().Repository.Create(pontoReferencia);
+
+            }
+
+            return pontosReferencia;
         }
         
         
