@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ligeirao/ligeirao.csproj
+/ligeirao/Properties/serviceDependencies.local.json
+/ligeirao/Properties/serviceDependencies.json
